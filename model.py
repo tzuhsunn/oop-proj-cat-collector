@@ -3,7 +3,7 @@ import torch.nn as nn
 import torchvision.models as models
 from thop import profile
 class cat_classifier(nn.Module):
-    def __init__(self,output_dim=67):
+    def __init__(self,output_dim=37):
         super(cat_classifier, self).__init__()
         self.model = models.efficientnet_b0(pretrained=True)
         self.classifier = nn.Sequential(
