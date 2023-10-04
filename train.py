@@ -12,12 +12,14 @@ from tqdm import tqdm
 
 from utils import plot_accuracy_curve, plot_loss_curve, plot_lr_curve
 from memory_profiler import profile
+from torch.utils.data import ConcatDataset
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--resume', default='', help='path to latest checkpoint')
 parser.add_argument('--export', default='model.pth', help='path to save checkpoint')
 parser.add_argument('--epoch', default=100, help='number of epochs to train')
-parser.add_argument('--batch_size', default=32, help='batch size')
+parser.add_argument('--batch_size', default=64, help='batch size')
 parser.add_argument('--lr', default=1e-5, help='learning rate')
 args = parser.parse_args()
 
@@ -116,14 +118,20 @@ def train():
 
 if __name__ == '__main__':
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    trans = transforms.Compose([transforms.Resize(255),
+    trans1 = transforms.Compose([transforms.Resize(255),
                                     transforms.CenterCrop(224),
                                     transforms.ToTensor(),
-                                    # transforms.Normalize(mean=[0.485, 0.456, 0.406], 
-                                    #                      std=[0.229, 0.224, 0.225])
                                 ])
-    full_ds = ImageFolder(root=os.path.join(os.getcwd(),'images'), transform=trans) #train and valid
+    trans2 = transforms.Compose([transforms.Resize(255),
+                                    transforms.CenterCrop(224),
+                                    transforms.RandomHorizontalFlip(),
+                                    transforms.RandomRotation(10),
+                                    transforms.ToTensor(),
+                                    ])
+    full_ds1 = ImageFolder(root=os.path.join(os.getcwd(),'images'), transform=trans1) #train and valid
+    full_ds2 = ImageFolder(root=os.path.join(os.getcwd(),'images'), transform=trans2) #train and valid
     
+    full_ds = ConcatDataset([full_ds1,full_ds2])
     #split train_ds into train and val
     train_size = int(len(full_ds)*0.8)
     val_size = int(len(full_ds)*0.1)
@@ -133,8 +141,8 @@ if __name__ == '__main__':
     print("train size: {}, val size: {}, test size: {}".format(len(train_ds), len(val_ds), len(test_ds)))
     # dataloader
     train_dl = DataLoader(train_ds, batch_size=args.batch_size,num_workers=6, shuffle=True,drop_last=True)
-    valid_dl = DataLoader(val_ds, batch_size=8, shuffle=True,num_workers=6,drop_last=True)
-    test_dl = DataLoader(test_ds, batch_size=8, shuffle=True,num_workers=6,drop_last=True)
+    valid_dl = DataLoader(val_ds, batch_size=32, shuffle=True,num_workers=6,drop_last=True)
+    test_dl = DataLoader(test_ds, batch_size=32, shuffle=True,num_workers=6,drop_last=True)
     
     # model
     model = cat_classifier().to(device)
