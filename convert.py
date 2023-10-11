@@ -20,6 +20,6 @@ for image in tqdm(images):
         trimap = cv2.imread(os.path.join(file_path, image), cv2.IMREAD_GRAYSCALE)
         mask = np.zeros(trimap.shape)
         mask[np.logical_or(trimap == 1, trimap == 3)] = 255
-        cv2.imwrite(os.path.join(target_path,image.replace('.png','_mask.png')), mask)
+        cv2.imwrite(os.path.join(target_path,image.replace('.png','_mask.jpg')), mask)
     else:
         print(f"File {file_path} does not exist.")
