@@ -1,4 +1,5 @@
 # cat-collector
 For 2023 aoop group project
-hihihi
-I am YT
+
+there will be final models, including classification and segmentation models
+
