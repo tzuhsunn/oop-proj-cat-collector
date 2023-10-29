@@ -16,10 +16,12 @@ In addition to the features mentioned above, the app will randomly assign attrib
 
 
 ![flutter](./imgs/flutter.png)
+
 The app development will be done using Flutter, which is an open-source framework for building cross-platform applications for both iOS and Android.
 
 
 ![flutter](./imgs/pytorch.jpg)
+
 The AI model development will be handled using PyTorch, a powerful deep learning framework, for tasks such as breed recognition and background removal.
 
 This exciting app project combines mobile app development with AI capabilities to enhance the experience of collecting and sharing pictures of adorable cats and dogs.
