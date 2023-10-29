@@ -13,7 +13,7 @@ from tqdm import tqdm
 from utils import plot_accuracy_curve, plot_loss_curve, plot_lr_curve
 from memory_profiler import profile
 from torch.utils.data import ConcatDataset
-
+import matplotlib.pyplot as plt
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--resume', default='', help='path to latest checkpoint')
@@ -24,6 +24,25 @@ parser.add_argument('--lr', default=1e-5, help='learning rate')
 args = parser.parse_args()
 
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
+
+
+def show_results(imgs, labels, preds):
+    num_imgs = len(imgs)
+    fig, axs = plt.subplots(4, 4, figsize=(10, 10))
+    correct = 0
+    for i in range(num_imgs):
+        row = i // 4
+        col = i % 4
+        axs[row, col].imshow(imgs[i].permute(1, 2, 0))
+        label = 'maf' if labels[i] == 1 else 'chi'
+        pred = 'maf' if preds[i] == 1 else 'chi'
+        correct += (label == pred)
+        axs[row, col].set_title('label: {}, pred: {}'.format(label, pred),color='r' if label != pred else 'b')
+    plt.tight_layout()
+    plt.savefig('results.png')
+    print('accuracy: {} out of {}'.format(correct, num_imgs))
+
+
 
 def adjust_learning_rate(epoch, T_max=1000, eta_min=2e-4, lr_init=args.lr):
     lr = eta_min + (lr_init - eta_min) * (1 + math.cos(math.pi * epoch / T_max)) / 2
@@ -39,6 +58,8 @@ def train():
     best_accuracy = 0
     start_epoch = 1
     #loading pretrained models
+
+
     if args.resume:
         if os.path.isfile(args.resume):
             print("===> loading models '{}'".format(args.resume))
@@ -79,7 +100,7 @@ def train():
                 loss = criterion(output, label)
                 valid_loss += loss.item()
             valid_loss = valid_loss / len(valid_dl) # average loss per batch
-            # compute test accuracy
+            # compute test accuracy and show the results
             correct = 0
             for (img,label) in tqdm(test_dl):
                 img = img.to(device)
@@ -87,7 +108,8 @@ def train():
                 output = model(img)
                 pred = output.argmax(dim=1, keepdim=True) #returns the index of the maximum value
                 correct += pred.eq(label.view_as(pred)).sum().item()
-            
+                
+
         accuracy = correct/len(test_ds)
         result['train_loss'].append(train_loss)
         result['valid_loss'].append(valid_loss)
@@ -142,7 +164,7 @@ if __name__ == '__main__':
     # dataloader
     train_dl = DataLoader(train_ds, batch_size=args.batch_size,num_workers=6, shuffle=True,drop_last=True)
     valid_dl = DataLoader(val_ds, batch_size=32, shuffle=True,num_workers=6,drop_last=True)
-    test_dl = DataLoader(test_ds, batch_size=32, shuffle=True,num_workers=6,drop_last=True)
+    test_dl = DataLoader(test_ds, batch_size=16, shuffle=True,num_workers=6,drop_last=True)
     
     # model
     model = cat_classifier().to(device)

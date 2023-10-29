@@ -5,7 +5,7 @@ from thop import profile
 class cat_classifier(nn.Module):
     def __init__(self,output_dim=37):
         super(cat_classifier, self).__init__()
-        self.model = models.efficientnet_b0(pretrained=True)
+        self.model = models.efficientnet.efficientnet_b0(weights='DEFAULT')
         self.classifier = nn.Sequential(
             nn.Linear(1000, 500),
             nn.ReLU(),
