@@ -26,7 +26,7 @@ The AI model development will be handled using PyTorch, a powerful deep learning
 
 This exciting app project combines mobile app development with AI capabilities to enhance the experience of collecting and sharing pictures of adorable cats and dogs.
 
-## keyword on the working items
+## Keyword on the Working Items
 
 ### App
 - UI Design
