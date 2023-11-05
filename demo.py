@@ -37,6 +37,7 @@ if __name__ == '__main__':
     test_dl = DataLoader(full_ds, batch_size=16, shuffle=True,num_workers=6,drop_last=True)
     model = cat_classifier().to(device)
     model.load_state_dict(torch.load('checkpoint/model.pth')['model'],strict=False)
+    model.eval()
     for img,label in test_dl:
         img = img.to(device)
         output = model(img)
