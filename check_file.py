@@ -9,17 +9,22 @@ from tqdm import tqdm
 from PIL import Image
 image_path = './images/images'
 mask_path = './masks'
+trimaps_path = './annotations/annotations/trimaps'
 # remove extension .mat
 for i in tqdm(os.listdir(image_path)):
     if i.endswith('.mat'):
         os.remove(os.path.join(image_path,i))
 
 images = natsorted(os.listdir(image_path))
-masks = natsorted(os.listdir(mask_path))       
+masks = natsorted(os.listdir(mask_path))
+trimaps = natsorted(os.listdir(trimaps_path))   
+
 images = [os.path.join(image_path,i) for i in images]
 masks = [os.path.join(mask_path,i) for i in masks]
+trimaps = [os.path.join(trimaps_path,i) for i in trimaps]
 
-for (image_path,mask_path) in tqdm(zip(images,masks)):
+
+for (image_path,mask_path,trimap_path) in tqdm(zip(images,masks,trimaps)):
    try:
        #check if the file exists
        if not os.path.isfile(image_path):
@@ -45,10 +50,20 @@ for (image_path,mask_path) in tqdm(zip(images,masks)):
        # Delete the image and mask files
        os.remove(image_path)
        os.remove(mask_path)
+       os.remove(trimap_path)
        # Continue with the next iteration of the loop
        continue
    
+# deal with trimap here
+# remove file started with ._
+for i in tqdm(os.listdir('./annotations/annotations/trimaps')):
+    if i.startswith('._'):
+        os.remove(os.path.join('./annotations/annotations/trimaps',i))
+   
 os.remove('./images/images/chihuahua_121.jpg')
+os.remove(os.path.join(trimaps_path,'chihuahua_121.png'))
 os.remove('./masks/chihuahua_121_mask.jpg')
 os.remove('./images/images/beagle_116.jpg')
 os.remove('./masks/beagle_116_mask.jpg')
+os.remove(os.path.join(trimaps_path,'beagle_116.png'))
+

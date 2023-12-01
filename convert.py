@@ -11,6 +11,7 @@ if not os.path.exists(target_path):
 images = (os.listdir(file_path))
 # remove the file with prefix '._' if it exists
 images = [images for images in images if not images.startswith('._')]
+
 images = natsorted(images)
 
 for image in tqdm(images):
