@@ -51,4 +51,4 @@ for (image_path,mask_path) in tqdm(zip(images,masks)):
 os.remove('./images/images/chihuahua_121.jpg')
 os.remove('./masks/chihuahua_121_mask.jpg')
 os.remove('./images/images/beagle_116.jpg')
-os.remove('./masks/beagle_116_masks.jpg')
+os.remove('./masks/beagle_116_mask.jpg')
