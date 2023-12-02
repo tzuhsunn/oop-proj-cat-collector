@@ -112,7 +112,7 @@ class cat_segmentation(nn.Module):
         x = self.up3(x, x2)
         x = self.up4(x, x1)
         logits = self.outc(x)
-        print(logits)
+        # print(logits)
         return logits
 
     def use_checkpointing(self):
@@ -131,7 +131,7 @@ if __name__ == '__main__':
     # calulate flops and params
     
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    model = cat_segmentation(n_channels = 3,n_classes = 1).to(device)
+    model = cat_segmentation(n_channels = 3,n_classes = 3).to(device)
     input = torch.randn(1, 3, 128, 128).to(device)
     flops, params = profile(model, inputs=(input, ))
     print("output shape:{}".format(model(input).shape))
