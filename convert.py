@@ -1,10 +1,11 @@
+'convert the trimaps to readable format'
 import os
 import cv2
 import numpy as np
 from natsort import natsorted
 from tqdm import tqdm
 # set the file path
-file_path = './annotations/annotations/trimaps/'
+file_path = './annotations/trimaps/'
 target_path = './masks/'
 if not os.path.exists(target_path):
     os.makedirs(target_path)
