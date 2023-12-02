@@ -39,17 +39,18 @@ class catDataset(Dataset):
         '''
         convert numpy array to tensor, HWC->CHW
         '''
-        img = np.ascontiguousarray(img.transpose(2, 0, 1)) # convert HWC to CHW
+        img = np.ascontiguousarray(np.transpose(img,(2,0,1))) # convert HWC to CHW
         img = torch.from_numpy(img).float() # convert numpy array to tensor
-        img.div_(255.0)
-        mask = torch.from_numpy(mask).float() # convert numpy array to tensor
+        img = img.div_(255)
+        mask = np.ascontiguousarray(mask)
+        mask = torch.from_numpy(mask).long()
         return img, mask
 
 if __name__ == '__main__':
 
-    image_path = './image_npy'
-    mask_path = './mask_npy'
+    image_path = './images_npy'
+    mask_path = './masks_npy'
     dataset = catDataset(image_path, mask_path)
-    img, mask = dataset[0]
-    print(img)
+    image, mask = dataset[0]
     print(mask)
+    
