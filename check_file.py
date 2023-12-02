@@ -1,26 +1,34 @@
+'''
+check if the file is valid, if not valid, delete it
+'''
+
 import os
 import cv2
-import numpy as np
-import torch
 from natsort import natsorted
-from torch.utils.data import Dataset
-from torch.utils.data import DataLoader
 from tqdm import tqdm
 from PIL import Image
-image_path = './images/images'
-mask_path = './masks'
-trimaps_path = './annotations/annotations/trimaps'
-# remove extension .mat
-for i in tqdm(os.listdir(image_path)):
-    if i.endswith('.mat'):
-        os.remove(os.path.join(image_path,i))
 
-images = natsorted(os.listdir(image_path))
-masks = natsorted(os.listdir(mask_path))
+images_path = './images'
+masks_path = './masks'
+trimaps_path = './annotations/trimaps'
+
+# remove extension .mat
+for i in tqdm(os.listdir(images_path)):
+    if i.endswith('.mat'):
+        os.remove(os.path.join(images_path,i))
+
+# deal with trimap here
+# remove file started with ._
+for i in tqdm(os.listdir(trimaps_path)):
+    if i.startswith('._'):
+        os.remove(os.path.join(trimaps_path,i))
+
+images = natsorted(os.listdir(images_path))
+masks = natsorted(os.listdir(masks_path))
 trimaps = natsorted(os.listdir(trimaps_path))   
 
-images = [os.path.join(image_path,i) for i in images]
-masks = [os.path.join(mask_path,i) for i in masks]
+images = [os.path.join(images_path,i) for i in images]
+masks = [os.path.join(masks_path,i) for i in masks]
 trimaps = [os.path.join(trimaps_path,i) for i in trimaps]
 
 
@@ -54,16 +62,13 @@ for (image_path,mask_path,trimap_path) in tqdm(zip(images,masks,trimaps)):
        # Continue with the next iteration of the loop
        continue
    
-# deal with trimap here
-# remove file started with ._
-for i in tqdm(os.listdir('./annotations/annotations/trimaps')):
-    if i.startswith('._'):
-        os.remove(os.path.join('./annotations/annotations/trimaps',i))
+
    
-os.remove('./images/images/chihuahua_121.jpg')
+os.remove(os.path.join(images_path,'chihuahua_121.jpg'))
 os.remove(os.path.join(trimaps_path,'chihuahua_121.png'))
-os.remove('./masks/chihuahua_121_mask.jpg')
-os.remove('./images/images/beagle_116.jpg')
-os.remove('./masks/beagle_116_mask.jpg')
+os.remove(os.path.join(masks_path,'chihuahua_121_mask.jpg'))
+os.remove(os.path.join(images_path,'beagle_116.jpg'))
 os.remove(os.path.join(trimaps_path,'beagle_116.png'))
+os.remove(os.path.join(masks_path,'beagle_116_mask.jpg'))
+
 
