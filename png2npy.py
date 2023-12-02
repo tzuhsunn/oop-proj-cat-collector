@@ -1,10 +1,13 @@
 import os
 import argparse
-import skimage.io as sio
+import cv2
+import torch
+from torchvision import transforms
 import numpy as np
 
+
 parser = argparse.ArgumentParser(description='Pre-processing .png images')
-parser.add_argument('--pathFrom', default='',
+parser.add_argument('--pathFrom', default='./images',
                     help='directory of images to convert')
 parser.add_argument('--pathTo', default='',
                     help='directory of images to save')
@@ -12,8 +15,19 @@ parser.add_argument('--split', default=True,
                     help='save individual images')
 parser.add_argument('--select', default='',
                     help='select certain path')
+parser.add_argument('--height',type=int,default=128,
+                    help='height of converted images')
+parser.add_argument('--width',type=int, default=128,
+                    help='width of converted images')
 
 args = parser.parse_args()
+
+transform = transforms.Compose([
+    transforms.ToPILImage(),
+    transforms.Resize((args.height, args.width)),  # replace with your desired size
+])
+
+
 
 for (path, dirs, files) in os.walk(args.pathFrom):
     print(path)
@@ -30,9 +44,11 @@ for (path, dirs, files) in os.walk(args.pathFrom):
         for fileName in files:
             (idx, ext) = os.path.splitext(fileName)
             if ext == '.png' or ext == '.jpg':
-                image = sio.imread(os.path.join(path, fileName))
+                image = cv2.imread(os.path.join(path, fileName))
+                 # Resize the image
+                image_resized = transform(image)
                 if args.split:
-                    np.save(os.path.join(targetDir, idx + '.npy'), image)
+                    np.save(os.path.join(targetDir, idx + '.npy'), image_resized)
                 n += 1
                 if n % 100 == 0:
                     print('Converted ' + str(n) + ' images.')
