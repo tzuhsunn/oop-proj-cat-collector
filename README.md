@@ -34,5 +34,8 @@ python train.py
 ```bash
 python inference.py
 ```
-You will have images
-![Original](test_image.png) ![MASK](test_mask.png) ![Image with masks](inference.png)
+
+## result
+| Original | MASK | Image with mask |
+| ---- | ----- | --- |
+|![Example image](test_image.png)|![Example image](test_mask.png) | ![Example image](inference.png)  |
