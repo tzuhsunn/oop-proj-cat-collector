@@ -132,7 +132,7 @@ if __name__ == '__main__':
     
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     model = cat_segmentation(n_channels = 3,n_classes = 3).to(device)
-    input = torch.randn(1, 3, 128, 128).to(device)
+    input = torch.randn(1, 3, 256, 256).to(device)
     flops, params = profile(model, inputs=(input, ))
     print("output shape:{}".format(model(input).shape))
     print('flops:{}G, params:{}M'.format(2*flops/(1e9), params/(1e6)))

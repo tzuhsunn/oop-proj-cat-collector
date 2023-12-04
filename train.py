@@ -6,21 +6,20 @@ import math
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
-from torchvision import transforms
-from torchvision.datasets import ImageFolder
 from tqdm import tqdm
 
-from utils import plot_accuracy_curve, plot_loss_curve, plot_lr_curve
+from utils import plot_loss_curve, plot_lr_curve
 from memory_profiler import profile
-from torch.utils.data import ConcatDataset
 from dataset import catDataset
 import numpy as np
+from torch.cuda.amp import GradScaler, autocast
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--resume', default='', help='path to latest checkpoint')
 parser.add_argument('--export', default='model.pth', help='path to save checkpoint')
 parser.add_argument('--epoch', default=10, help='number of epochs to train')
-parser.add_argument('--batch_size', default=32, help='batch size')
+parser.add_argument('--batch_size', default=16, help='batch size')
 parser.add_argument('--lr', default=1e-5, help='learning rate')
 args = parser.parse_args()
 
@@ -35,6 +34,7 @@ def adjust_learning_rate(epoch, T_max=1000, eta_min=2e-4, lr_init=args.lr):
 
 @profile
 def train():
+    scaler = GradScaler()
     history = []
     best_loss = np.inf
     start_epoch = 1
@@ -62,10 +62,15 @@ def train():
             img = img.to(device)
             label = label.to(device)
             optimizer.zero_grad()
-            output = model(img)
-            loss = criterion(output, label)
-            loss.backward()
-            optimizer.step()
+            # Run forward pass in autocast
+            with autocast():
+                outputs = model(img)
+                loss = criterion(outputs, label)
+
+            # Scale the loss and perform backward pass
+            scaler.scale(loss).backward()
+            scaler.step(optimizer)
+            scaler.update()
             train_loss += loss.item()
         train_loss = train_loss / len(train_dl) # average loss per batch
         

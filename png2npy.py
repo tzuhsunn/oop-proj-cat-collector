@@ -15,9 +15,9 @@ parser.add_argument('--split', default=True,
                     help='save individual images')
 parser.add_argument('--select', default='',
                     help='select certain path')
-parser.add_argument('--height',type=int,default=128,
+parser.add_argument('--height',type=int,default=256,
                     help='height of converted images')
-parser.add_argument('--width',type=int, default=128,
+parser.add_argument('--width',type=int, default=256,
                     help='width of converted images')
 
 args = parser.parse_args()
@@ -45,7 +45,7 @@ for (path, dirs, files) in os.walk(args.pathFrom):
             (idx, ext) = os.path.splitext(fileName)
             if ext == '.png' or ext == '.jpg':
                 image = cv2.imread(os.path.join(path, fileName))
-                 # Resize the image
+                # Resize the image
                 image_resized = transform(image)
                 if args.split:
                     np.save(os.path.join(targetDir, idx + '.npy'), image_resized)

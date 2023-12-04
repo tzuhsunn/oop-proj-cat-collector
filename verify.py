@@ -15,4 +15,6 @@ for i in range(len(images)):
         print('image: ',images[i])
         print('mask: ',masks[i])
         print('images and masks are not matched')
-        break
+        exit()
+
+print('Congradulations! images and masks are matched')
