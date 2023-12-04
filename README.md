@@ -1,7 +1,6 @@
 # cat-collector
 For 2023 aoop group project  
-Image segementation using U net
-
+Image segementation using segmentation_models_pytorch
 ## Unzip the dataset
 ``` bash
 unzip cats-and-dogs-breeds-classification-oxford-dataset.zip

@@ -4,11 +4,8 @@ import os
 from torchvision import transforms
 import cv2
 import numpy as np
-
-#import your model here
-from model import cat_segmentation
 import argparse
-
+import segmentation_models_pytorch as smp
 
 parser = argparse.ArgumentParser(description='inferencing .png images')
 parser.add_argument('--image', default='./test_image.png',
@@ -19,8 +16,8 @@ parser.add_argument('--result', default='./inference.png',
                     help='path of saving the result')
 parser.add_argument('--model', default='./checkpoint/model.pth',
                     help='path of the model')
-parser.add_argument('--height', default=128)
-parser.add_argument('--width', default=128)
+parser.add_argument('--height', default=256)
+parser.add_argument('--width', default=256)
 args = parser.parse_args()
 
 
@@ -52,6 +49,29 @@ transform = transforms.Compose([
     ])
 
 
+# def apply_mask_to_image(resized_image, mask):
+#     """
+#     Apply the given mask to the resized image.
+
+#     Parameters:
+#     resized_image (np.array): The resized image (HWC format).
+#     mask (np.array): The mask image, where 0 indicates background (HW format).
+
+#     Returns:
+#     np.array: The image with the background blocked out.
+#     """
+#     # Ensure the mask is a boolean mask
+#     mask_bool = mask.astype(bool)
+
+#     # If the mask is not 3-channel, replicate it across the color channels
+#     if len(mask.shape) == 2:
+#         mask_bool = np.stack([mask_bool] * 3, axis=-1)
+
+#     # Apply the mask to the image
+#     blocked_image = np.where(mask_bool, resized_image, 0)
+
+#     return blocked_image
+
 def apply_mask_to_image(resized_image, mask):
     """
     Apply the given mask to the resized image.
@@ -59,9 +79,10 @@ def apply_mask_to_image(resized_image, mask):
     Parameters:
     resized_image (np.array): The resized image (HWC format).
     mask (np.array): The mask image, where 0 indicates background (HW format).
+    blur_sigma (float): The sigma value for the Gaussian blur.
 
     Returns:
-    np.array: The image with the background blocked out.
+    np.array: The image with the background blurred.
     """
     # Ensure the mask is a boolean mask
     mask_bool = mask.astype(bool)
@@ -70,10 +91,13 @@ def apply_mask_to_image(resized_image, mask):
     if len(mask.shape) == 2:
         mask_bool = np.stack([mask_bool] * 3, axis=-1)
 
-    # Apply the mask to the image
-    blocked_image = np.where(mask_bool, resized_image, 0)
-
-    return blocked_image
+    # Blur the entire image
+    blurred_image = cv2.GaussianBlur(resized_image, (11,11), 0)
+    cv2.imwrite('./blurred.png', blurred_image)
+    # Combine the blurred image with the original image using the mask
+    final_image = np.where(mask_bool, resized_image, blurred_image)
+   
+    return final_image
 
 
 if __name__ == '__main__':
@@ -83,7 +107,7 @@ if __name__ == '__main__':
     image_resized = transform(image)
     image_tensor = toTensor(image_resized).to(device).unsqueeze_(dim = 0)
     # load the model
-    model = cat_segmentation(n_channels=3, n_classes=3)
+    model = smp.UnetPlusPlus('efficientnet-b0', in_channels=3, classes=3,encoder_weights='imagenet')
     model.load_state_dict(torch.load(args.model)['model'],strict=False)
     model.eval()
     model.to(device)

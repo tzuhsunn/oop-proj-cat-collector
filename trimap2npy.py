@@ -10,7 +10,7 @@ import numpy as np
 
 
 parser = argparse.ArgumentParser(description='Pre-processing .png images')
-parser.add_argument('--pathFrom', default='./annotations/annotations/trimaps/',
+parser.add_argument('--pathFrom', default='./annotations/trimaps/',
                     help='directory of images to convert')
 parser.add_argument('--pathTo', default='./masks_npy/',
                     help='directory of images to save')

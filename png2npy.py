@@ -9,7 +9,7 @@ import numpy as np
 parser = argparse.ArgumentParser(description='Pre-processing .png images')
 parser.add_argument('--pathFrom', default='./images',
                     help='directory of images to convert')
-parser.add_argument('--pathTo', default='',
+parser.add_argument('--pathTo', default='./images_npy',
                     help='directory of images to save')
 parser.add_argument('--split', default=True,
                     help='save individual images')

@@ -1,7 +1,6 @@
 import argparse
 import os
 
-from model import cat_segmentation
 import math
 import torch
 import torch.nn as nn
@@ -13,19 +12,20 @@ from memory_profiler import profile
 from dataset import catDataset
 import numpy as np
 from torch.cuda.amp import GradScaler, autocast
-
+import segmentation_models_pytorch as smp
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--resume', default='', help='path to latest checkpoint')
 parser.add_argument('--export', default='model.pth', help='path to save checkpoint')
-parser.add_argument('--epoch', default=10, help='number of epochs to train')
-parser.add_argument('--batch_size', default=16, help='batch size')
+parser.add_argument('--epoch', default=20, help='number of epochs to train')
+parser.add_argument('--batch_size', default=32, help='batch size')
 parser.add_argument('--lr', default=1e-5, help='learning rate')
 args = parser.parse_args()
 
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
+torch.cuda.empty_cache()
 
-def adjust_learning_rate(epoch, T_max=1000, eta_min=2e-4, lr_init=args.lr):
+def adjust_learning_rate(epoch, T_max=args.epoch, eta_min=args.lr*0.1, lr_init=args.lr):
     lr = eta_min + (lr_init - eta_min) * (1 + math.cos(math.pi * epoch / T_max)) / 2
     if epoch >= T_max:
         lr = eta_min
@@ -53,7 +53,7 @@ def train():
 
     model.train()
     for epoch in range(start_epoch,args.epoch + 1):
-        # adjust_learning_rate(epoch)
+        adjust_learning_rate(epoch)
         result = {'train_loss': [], 'valid_loss': [], 'lrs': []}
         print('Epoch: {}'.format(epoch))
         print('learning rate: {:.6f}'.format(optimizer.param_groups[0]['lr']))
@@ -62,6 +62,11 @@ def train():
             img = img.to(device)
             label = label.to(device)
             optimizer.zero_grad()
+            # output = model(img)
+            # loss = criterion(output, label)
+            # loss.backward()
+            # optimizer.step()
+            # train_loss += loss.item()
             # Run forward pass in autocast
             with autocast():
                 outputs = model(img)
@@ -128,7 +133,7 @@ if __name__ == '__main__':
 
     
     # model
-    model = cat_segmentation(n_channels = 3,n_classes = 3).to(device)
+    model = smp.UnetPlusPlus('efficientnet-b0', in_channels=3, classes=3,encoder_weights='imagenet').to(device)
     # loss function
     criterion = nn.CrossEntropyLoss()
     # optimizer
