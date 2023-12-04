@@ -29,3 +29,8 @@ After preprocessing, you will have folders
 ```bash
 python train.py
 ```
+
+## run the inference
+```bash
+python inference.py
+```
