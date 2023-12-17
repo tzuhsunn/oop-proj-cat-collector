@@ -1,3 +1,10 @@
+'''
+This is a experiment to use wandb to train the model
+The file is modified from train.py, and the checkpoints are saved to wandb cloud
+Note that the model can be loaded from the cloud by setting the id
+'''
+
+
 import argparse
 import os
 
@@ -10,7 +17,6 @@ from torchvision import transforms
 from torchvision.datasets import ImageFolder
 from tqdm import tqdm
 
-from utils import plot_accuracy_curve, plot_loss_curve, plot_lr_curve
 from torch.utils.data import ConcatDataset
 import matplotlib.pyplot as plt
 
@@ -40,7 +46,6 @@ def adjust_learning_rate(epoch, T_max=1000, eta_min=2e-4, lr_init=args.lr):
         param_group['lr'] = lr
 
 def train():
-    history = []
     train_loss = 0
     best_accuracy = 0
     start_epoch = 1
@@ -53,7 +58,6 @@ def train():
         model.load_state_dict(checkpoint['model'])
         start_epoch = checkpoint['epoch']
         best_accuracy = checkpoint['best_accuracy']
-        history = checkpoint['history']
         print("checkpoint loaded: epoch = {}, accuracy = {}".format(start_epoch, best_accuracy))
 
 
@@ -103,35 +107,21 @@ def train():
         print('Train Loss: {:.4f}'.format(train_loss))
         print('Val Loss: {:.4f}'.format(valid_loss))
         print('Test Accuracy: {:.4f}'.format(accuracy))
-        history.append(result)
 
         wandb.log({"epoch": epoch, "Loss": {"Train": train_loss, "Valid": valid_loss}})
         wandb.log({"epoch": epoch, "accuracy": accuracy})
 
         if accuracy > best_accuracy:
-            state = {"epoch": epoch,
-                    "model": model.state_dict(),
-                    "best_accuracy": best_accuracy,
-                    "history": history}
-            
-            # save the model to local
-            model_folder = "checkpoint"
-            if not os.path.exists(model_folder):
-                os.makedirs(model_folder)
             best_accuracy = accuracy
-            model_out_path = os.path.join(model_folder, args.export)
             state = {"epoch": epoch,
                     "model": model.state_dict(),
                     "best_accuracy": best_accuracy,
-                    "history": history}
-            torch.save(state, model_out_path)
-            print("===> Checkpoint saved to {}".format(model_out_path))
+                    }
 
             # save the model to wandb cloud
             torch.save(state, args.export)
             wandb.save(args.export)
-            print("===> Checkpoint saved to {}".format(model_out_path))
-            print("===> model saved to {}".format(args.wandb_model))
+            print("===> model saved to {}".format(args.pth_model))
 
 
 if __name__ == '__main__':
