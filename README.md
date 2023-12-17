@@ -30,3 +30,6 @@ python train.py
 ```bash
 python demo.py
 ```
+
+## Result
+The result and model can be found in wandb if you run train_wandb.py
