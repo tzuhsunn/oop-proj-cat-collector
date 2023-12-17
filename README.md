@@ -25,11 +25,18 @@ python check_file.py
 ```bash
 python train.py
 ```
+if you want to resume training, you can specify .pth file path 
+```bash
+python train.py --resume [path to .pth file]
+```
 Alternately, run the train_wandb.py if you want the result in saved in wandb 
 ```bash
 python train_wandb.py
 ```
-
+if you want to resume training using wandb, you can specify id 
+```bash
+python train_wandb.py --id [runs-id]
+```
 ## demo
 Currently, only available if runing train.py 
 ```bash
