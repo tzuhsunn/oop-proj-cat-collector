@@ -25,11 +25,13 @@ python check_file.py
 ```bash
 python train.py
 ```
+Alternately, run the train_wandb.py if you want the result in saved in wandb 
+```bash
+python train_wandb.py
+```
 
 ## demo
+Currently, only available if runing train.py 
 ```bash
 python demo.py
 ```
-
-## Result
-The result and model can be found in wandb if you run train_wandb.py
