@@ -25,7 +25,7 @@ import wandb
 parser = argparse.ArgumentParser()
 parser.add_argument('--display',default='experiment-2023-12-17', help='name of the run for wandb')
 parser.add_argument('--pth_model',default='classifier.pth', help='path to save the.pth file and upload to wandb')
-parser.add_argument('--onnx_model', default='classfier.onnx', help='path to save the onnx model and upload to wandb')
+parser.add_argument('--onnx_model', default='classifier.onnx', help='path to save the onnx model and upload to wandb')
 parser.add_argument('--id', default=None,type=str, help='the id of the run for wandb (used for rerun)')
 parser.add_argument('--resume', default='', help='path to latest checkpoint')
 parser.add_argument('--export', default='classifier.pth', help='path to save checkpoint')
