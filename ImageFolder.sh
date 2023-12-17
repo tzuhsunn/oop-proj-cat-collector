@@ -17,3 +17,6 @@ for type in "${types[@]}"
 do
   mv "$type"_*.jpg "$type"
 done
+# remove the .mat files
+rm *.mat
+rm -r images
