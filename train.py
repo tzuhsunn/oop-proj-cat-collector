@@ -15,6 +15,7 @@ from memory_profiler import profile
 from torch.utils.data import ConcatDataset
 import matplotlib.pyplot as plt
 
+# command line arguments (can be passed in the command line)
 parser = argparse.ArgumentParser()
 parser.add_argument('--resume', default='', help='path to latest checkpoint')
 parser.add_argument('--export', default='model.pth', help='path to save checkpoint')
@@ -23,10 +24,17 @@ parser.add_argument('--batch_size', default=64, help='batch size')
 parser.add_argument('--lr', default=1e-5, help='learning rate')
 args = parser.parse_args()
 
+# change working directory to the folder of this file
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 
 def show_results(imgs, labels, preds):
+    '''
+    show the results of the test set
+    imgs: list of images
+    labels: list of labels(which are true order in classes)
+    preds: list of predictions(which are predicted order in classes)
+    '''
     num_imgs = len(imgs)
     fig, axs = plt.subplots(4, 4, figsize=(10, 10))
     correct = 0
@@ -45,6 +53,13 @@ def show_results(imgs, labels, preds):
 
 
 def adjust_learning_rate(epoch, T_max=1000, eta_min=2e-4, lr_init=args.lr):
+    '''
+    adjust learning rate according to the cosine annealing schedule
+    epoch: current epoch
+    T_max: maximum number of steps in the cosine annealing schedule
+    eta_min: minimum learning rate
+    lr_init: input current learning rate, add modify it in-place
+    '''
     lr = eta_min + (lr_init - eta_min) * (1 + math.cos(math.pi * epoch / T_max)) / 2
     if epoch >= T_max:
         lr = eta_min
@@ -140,6 +155,7 @@ def train():
 
 if __name__ == '__main__':
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    
     trans1 = transforms.Compose([transforms.Resize(255),
                                     transforms.CenterCrop(224),
                                     transforms.ToTensor(),
