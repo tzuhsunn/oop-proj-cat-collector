@@ -38,7 +38,22 @@ if you want to resume training using wandb, you can specify id
 python train_wandb.py --id [runs-id]
 ```
 ## demo
-Currently, only available if runing train.py 
+Currently, only available if running train.py 
 ```bash
 python demo.py
+```
+
+## api
+To open server:
+```bash
+cd app
+flask run
+```
+To do inference:
+```bash
+curl -X POST -F "file=@/path/to/image.jpg" http://localhost:5000/predict
+```
+or use request library:
+```bash
+python test.py
 ```
