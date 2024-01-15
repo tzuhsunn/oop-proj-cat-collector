@@ -1,0 +1,5 @@
+Pillow==10.0.1
+flask==3.0.0 
+--find-links https://download.pytorch.org/whl/torch_stable.html
+torch==2.1.2+cpu
+torchvision
