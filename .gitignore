@@ -3,5 +3,4 @@
 ./.gitignore
 ./wandb/
 ./images/
-./checkpoint/
 ./annotations/
