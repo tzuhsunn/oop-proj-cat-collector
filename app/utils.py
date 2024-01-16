@@ -5,8 +5,7 @@ import torch.nn as nn
 import torchvision.transforms as transforms 
 from PIL import Image
 import io
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from model import cat_classifier # import your model here
+from model import classifier # import your model here
 
 
 
@@ -22,12 +21,26 @@ def transform_image(image_bytes):
     
     return transform(image).unsqueeze(0)
 
+# predict cat or dog or neither
+def get_prediction_bi(image_tensor):
+    # load the model
+    PATH = './checkpoint/model_bi.pth' # path to your model checkpoint\
+    model = classifier(output_dim = 2)
+    model.load_state_dict(torch.load(PATH, map_location=torch.device('cpu'))['model'],strict=False)
+    model.eval()
+    output = model(image_tensor)
+    pred = output.argmax(dim=1, keepdim=True)
+    print(pred)
+    # get the value of pred
+    predicted = pred.item()
+    
+    return predicted
 
-# predict
+# predict breeds
 def get_prediction(image_tensor):
     # load the model
     PATH = './checkpoint/model.pth' # path to your model checkpoint\
-    model = cat_classifier()
+    model = classifier(output_dim = 37)
     model.load_state_dict(torch.load(PATH, map_location=torch.device('cpu'))['model'],strict=False)
     model.eval()
     output = model(image_tensor)
