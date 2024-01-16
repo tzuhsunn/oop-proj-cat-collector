@@ -39,3 +39,15 @@ This exciting app project combines mobile app development with AI capabilities t
 - Cat and Dog Breed Recognition
 - Background Removal (Clipping)
 - Model Deployment
+
+## CICD flow
+1. Complete certain feature in branches
+2. Make PR to main branch and wait for review & merge
+3. Trigger GitHub Action and deploy to GCP VM
+
+## Deployment
+1. Flask server, frontend, backend and sql are served by NGINX
+2. Having DNS name and OpenSSL certificate
+3. Flask server -> python engine run at port 5000 -> proxy pass to nginx /cat/
+4. Nodejs server -> docker run forwarding to port 3000
+5. Frontend -> build out and server by nginx (root location /)
