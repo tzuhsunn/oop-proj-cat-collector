@@ -52,5 +52,5 @@ jobs:
           cd /home/hsun/oop-proj-cat-collector
           git pull
           cd predict_api/app
-          ps aux | grep "python3 app.py" | awk '{print $2}' | xargs kill -9
+          ps aux | grep "python3 app.py" | grep -v grep | awk '{print $2}' | xargs -r kill -9
           nohup python3 app.py &
