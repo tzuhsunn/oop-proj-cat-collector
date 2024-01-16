@@ -26,7 +26,7 @@ def transform_image(image_bytes):
 # predict
 def get_prediction(image_tensor):
     # load the model
-    PATH = '../checkpoint/model.pth' # path to your model checkpoint\
+    PATH = './checkpoint/model.pth' # path to your model checkpoint\
     model = cat_classifier()
     model.load_state_dict(torch.load(PATH, map_location=torch.device('cpu'))['model'],strict=False)
     model.eval()
