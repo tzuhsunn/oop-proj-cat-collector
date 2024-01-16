@@ -5,7 +5,7 @@ import torch.nn as nn
 import torchvision.transforms as transforms 
 from PIL import Image
 import io
-from model import classifier # import your model here
+from model import classifier, cat_classifier # import your model here
 
 
 
@@ -39,9 +39,9 @@ def get_prediction_bi(image_tensor):
 # predict breeds
 def get_prediction(image_tensor):
     # load the model
-    PATH = './checkpoint/model.pth' # path to your model checkpoint\
-    model = classifier(output_dim = 37)
-    model.load_state_dict(torch.load(PATH, map_location=torch.device('cpu'))['model'],strict=False)
+    path_1 = './checkpoint/model.pth' # path to your model checkpoint\
+    model = cat_classifier(output_dim = 37)
+    model.load_state_dict(torch.load(path_1, map_location=torch.device('cpu'))['model'])
     model.eval()
     output = model(image_tensor)
     pred = output.argmax(dim=1, keepdim=True)
