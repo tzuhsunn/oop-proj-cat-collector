@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from utils import transform_image, get_prediction
+from utils import transform_image, get_prediction, get_prediction_bi
 app = Flask(__name__)
 
 def allowed_file(filename):
@@ -23,9 +23,12 @@ def predict():
         
         img_bytes = file.read() #read the image file
         tensor = transform_image(img_bytes) # image -> tensor
-        prediction = get_prediction(tensor)
-        data = {'prediction': prediction}
-        return jsonify(data)
+        if get_prediction_bi(tensor) == 1:
+            prediction = get_prediction(tensor)
+            data = {'prediction': prediction}
+            return jsonify(data)
+        else:
+            return jsonify({'error': 'neither cat nor dog'})
         # except:
         #     return jsonify({'error': 'error during prediction'})
 
