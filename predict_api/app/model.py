@@ -35,3 +35,20 @@ class cat_classifier(nn.Module):
         x = self.model(x)
         x = self.classifier(x)
         return x
+
+class leaf_classifier(nn.Module):
+    def __init__(self,output_dim=4):
+        super(leaf_classifier, self).__init__()
+        self.model = models.efficientnet.efficientnet_b0(weights = 'DEFAULT')
+        self.classifier = nn.Sequential(
+            nn.Linear(1000, 500),
+            nn.ReLU(),
+            nn.Linear(500, 250),
+            nn.ReLU(),
+            nn.Linear(250, output_dim),
+        )
+        
+    def forward(self, x):
+        x = self.model(x)
+        x = self.classifier(x)
+        return x
