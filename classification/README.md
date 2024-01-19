@@ -1,8 +1,7 @@
 # cat-collector
-For 2023 aoop group project classification part
+For 2023 NYCU aoop group project classification function
 ## Description
 Classify cats and dogs by their breeds with total 37 catagories. Use efficientnet as backbone and train with pytorch.
-![results.png](results.png)
 Download datasets from : [kaggle](https://www.kaggle.com/datasets/zippyz/cats-and-dogs-breeds-classification-oxford-dataset/data?select=images)
 
 ```bash
@@ -38,18 +37,19 @@ if you want to resume training using wandb, you can specify id
 python train_wandb.py --id [runs-id]
 ```
 ## demo
-Currently, only available if running train.py 
+It will produce a results.png file in the same directory
 ```bash
 python demo.py
 ```
+![results.png](results.png)
 
 ## api
-To open server:
+Using Flask to build api:
 ```bash
 cd app
 flask run
 ```
-To do inference:
+use POST method:
 ```bash
 curl -X POST -F "file=@/path/to/image.jpg" http://localhost:5000/predict
 ```
