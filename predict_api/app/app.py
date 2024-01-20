@@ -2,6 +2,9 @@ from flask import Flask, request, jsonify
 from utils import transform_image, get_prediction, get_prediction_bi, transform_agriculture, get_prediction_leaf
 from flask import Response
 import json
+import random
+from property import properties
+
 app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
 
@@ -40,7 +43,35 @@ def predict():
             return jsonify({'prediction': -1}) # -1 means not a cat and not a dog
         # except:
         #     return jsonify({'error': 'error during prediction'})
+    
+@app.route('/recommend', methods=['POST'])
+def recommend():
+    if request.method == 'POST':
+        data = request.get_json()
+        if data is None:
+            return jsonify({'error': 'no data'})
 
+        test = data.get('past_breeds', [])
+        sum_list = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        for i in test:
+            sum_list = [a + b for a, b in zip(sum_list, properties[i])]
+
+        temp = []
+        for i in range(len(properties)):
+            temp.append(sum([a * b for a, b in zip(sum_list, properties[i])]))
+
+        for i in test:
+            temp[i] = 0
+
+        # Find the maximum value
+        max_value = max(temp)
+
+        # Find all indices of the maximum value
+        max_indices = [i for i, x in enumerate(temp) if x == max_value]
+        random_number = random.choice(max_indices)
+
+        return jsonify({'recommendation': random_number})
+        
 @app.route('/agriculture', methods=['POST'])
 def agriculture():
     if request.method == 'POST':
