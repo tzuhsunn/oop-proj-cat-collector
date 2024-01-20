@@ -19,7 +19,7 @@ import matplotlib.pyplot as plt
 parser = argparse.ArgumentParser()
 parser.add_argument('--resume', default='', help='path to latest checkpoint')
 parser.add_argument('--export', default='model.pth', help='path to save checkpoint')
-parser.add_argument('--epoch', default=100, help='number of epochs to train')
+parser.add_argument('--epoch', default=10, help='number of epochs to train')
 parser.add_argument('--batch_size', default=64, help='batch size')
 parser.add_argument('--lr', default=1e-5, help='learning rate')
 args = parser.parse_args()
@@ -52,7 +52,7 @@ def show_results(imgs, labels, preds):
 
 
 
-def adjust_learning_rate(epoch, T_max=1000, eta_min=2e-4, lr_init=args.lr):
+def adjust_learning_rate(epoch, T_max=10, eta_min=2e-4, lr_init=args.lr):
     '''
     adjust learning rate according to the cosine annealing schedule
     epoch: current epoch
@@ -72,9 +72,8 @@ def train():
     train_loss = 0
     best_accuracy = 0
     start_epoch = 1
+
     #loading pretrained models
-
-
     if args.resume:
         if os.path.isfile(args.resume):
             print("===> loading models '{}'".format(args.resume))
@@ -89,7 +88,7 @@ def train():
 
     model.train()
     for epoch in range(start_epoch,args.epoch + 1):
-        # adjust_learning_rate(epoch)
+        adjust_learning_rate(epoch)
         result = {'train_loss': [], 'valid_loss': [], 'lrs': [], 'accuracy': []}
         print('Epoch: {}'.format(epoch))
         print('learning rate: {:.6f}'.format(optimizer.param_groups[0]['lr']))
@@ -151,7 +150,6 @@ def train():
         plot_loss_curve(history)
         plot_accuracy_curve(history)
         plot_lr_curve(history)
-
 
 if __name__ == '__main__':
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
