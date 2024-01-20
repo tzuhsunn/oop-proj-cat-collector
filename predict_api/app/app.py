@@ -37,12 +37,11 @@ def predict():
         tensor = transform_image(img_bytes) # image -> tensor
         if get_prediction_bi(tensor) == 1:
             prediction = get_prediction(tensor)
-            data = {'prediction': classes[prediction]}
+            data = {'number': prediction,'breed': classes[prediction]}
             return jsonify(data)
         else:
-            return jsonify({'prediction': -1}) # -1 means not a cat and not a dog
-        # except:
-        #     return jsonify({'error': 'error during prediction'})
+            return jsonify({'number': -1},{'breed':"not a cat or dog"}) # -1 means not a cat and not a dog
+        
     
 @app.route('/recommend', methods=['POST'])
 def recommend():
@@ -50,16 +49,30 @@ def recommend():
         data = request.get_json()
         if data is None:
             return jsonify({'error': 'no data'})
-
-        test = data.get('past_breeds', [])
-        sum_list = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        # get the past breeds
+        test = data.get('past_breeds')
+        # check if the past breeds is empty
+        if len(test) == 0:
+            number = random.randint(0, 36)
+            return jsonify({'number': number},{'breed': classes[number]})
+        # check if the elements of the past breeds are in the range of 0-36
+        for i in test:
+            if i < 0 or i > 36:
+                return jsonify({'error': 'invalid input out of index'})
+            
+        #initialize a list of 0
+        sum_list = [0] * len(properties[0])
+        
+        # gether the properties of the past breeds, store in sum_list
         for i in test:
             sum_list = [a + b for a, b in zip(sum_list, properties[i])]
 
+        # calculate the similarity between the past breeds and all breeds, store in temp
         temp = []
         for i in range(len(properties)):
             temp.append(sum([a * b for a, b in zip(sum_list, properties[i])]))
 
+        # set the past breeds to 0 to avoid recommending the same breeds
         for i in test:
             temp[i] = 0
 
@@ -70,7 +83,7 @@ def recommend():
         max_indices = [i for i, x in enumerate(temp) if x == max_value]
         random_number = random.choice(max_indices)
 
-        return jsonify({'recommendation': random_number})
+        return jsonify({'number': random_number, 'breed': classes[random_number]})
         
 @app.route('/agriculture', methods=['POST'])
 def agriculture():
