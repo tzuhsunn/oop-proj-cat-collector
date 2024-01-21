@@ -12,11 +12,11 @@ const navConfig = [
     path: '/',
     icon: icon('ic_analytics'),
   },
-  // {
-  //   title: 'user',
-  //   path: '/user',
-  //   icon: icon('ic_user'),
-  // },
+  {
+    title: '貓貓聊天室',
+    path: '/chat',
+    icon: <img src='/assets/icons/chat.png' alt='chat'/>,
+  },
   {
     title: '貓貓圖鑑',
     path: '/products',

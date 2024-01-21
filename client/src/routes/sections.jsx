@@ -11,6 +11,7 @@ export const ProductsPage = lazy(() => import('src/pages/products'));
 export const Page404 = lazy(() => import('src/pages/page-not-found'));
 export const ProfilePage = lazy(() => import('src/pages/profile'));
 export const ImagePage = lazy(() => import('src/pages/image-edit'));
+export const ChatPage = lazy(() => import('src/pages/chat'));
 
 // ----------------------------------------------------------------------
 
@@ -31,6 +32,7 @@ export default function Router() {
         { path: 'blog', element: <BlogPage /> },
         { path: 'profile', element: <ProfilePage /> },
         { path: 'image-edit', element: <ImagePage /> },
+        { path: 'chat', element: <ChatPage /> },
       ],
     },
     {
