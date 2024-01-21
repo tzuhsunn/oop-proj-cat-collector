@@ -4,8 +4,11 @@ from flask import Response
 import json
 import random
 from property import properties
+from flask_cors import CORS
+import requests
 
 app = Flask(__name__)
+CORS(app)
 app.config['JSON_AS_ASCII'] = False
 
 classes = ['阿比西尼亞貓','孟加拉貓','伯曼貓','孟買貓','英國短毛貓','埃及貓','緬因貓','波斯貓','布偶貓','俄羅斯藍貓','暹羅貓',
@@ -105,6 +108,31 @@ def agriculture():
                         mimetype="application/json; charset=utf-8")
         return response
 
+@app.route('/query', methods=['POST'])
+def test():
+    if request.method == 'POST':
+        data = request.get_json()
+        if data is None:
+            return jsonify({'error': 'no data'})
+        input_data = data.get('input')
+        print(input_data)
+        api_url = "http://203.145.216.230:50642/cat-dog/invoke"
+        api_payload = {
+            "input": input_data,
+            "config": {},
+            "kwargs": {}
+        }
+        try:
+            response = requests.post(api_url, json=api_payload)
+            response_data = response.json()
+
+            if 'output' in response_data:
+                return jsonify({'output': response_data['output'], 'input': input_data})
+            else:
+                return jsonify({'error': 'unexpected response from the external API'})
+        except requests.RequestException as e:
+            return jsonify({'error': f'Error calling the external API: {str(e)}'})
+        
 @app.route('/', methods=['GET'])
 def index():
     return "<h1>Flask Server is up and running</h1>"
