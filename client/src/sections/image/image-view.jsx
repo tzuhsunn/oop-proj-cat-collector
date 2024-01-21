@@ -71,7 +71,7 @@ export default function ImageView() {
 
       const data = await response.json();
       const breed = data.breed;
-      const breedID = data.number;
+      // const breedID = data.number;
 
       setPredictionResult(breed);
       setOpenDialog(true);
