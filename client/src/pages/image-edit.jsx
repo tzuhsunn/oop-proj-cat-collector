@@ -1,17 +1,17 @@
 import { Helmet } from 'react-helmet-async';
 
-import { BlogView } from 'src/sections/blog/view';
+import { ImageView } from 'src/sections/image';
 
 // ----------------------------------------------------------------------
 
-export default function BlogPage() {
+export default function ImageUploadPage() {
   return (
     <>
       <Helmet>
-        <title> 貓貓抽卡 | Cat Collector </title>
+        <title> 上傳圖片 | Cat Collector </title>
       </Helmet>
 
-      <BlogView />
+      <ImageView />
     </>
   );
 }

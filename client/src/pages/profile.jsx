@@ -8,7 +8,7 @@ export default function BlogPage() {
   return (
     <>
       <Helmet>
-        <title> Profile | ScritchCare </title>
+        <title> Profile | Cat Collector </title>
       </Helmet>
 
       <ProfileView />
