@@ -4,7 +4,9 @@ from flask import Response
 import json
 import random
 from property import properties
+from flask_cors import CORS
 
+CORS(app)
 app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
 
