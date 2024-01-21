@@ -1,13 +1,13 @@
 ```mermaid
 classDiagram
-    class cat_classifier{
-        +output_dim : int = 37
-        +forward()
-    }
     class Module{
     }
     class binary_classifier{
         +output_dim : int = 2
+        +forward()
+    }
+    class cat_classifier{
+        +output_dim : int = 37
         +forward()
     }
     class Generic{
