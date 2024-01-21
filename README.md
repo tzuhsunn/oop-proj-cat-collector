@@ -1,43 +1,48 @@
 # cat-collector
 For 2023 aoop group project
 
-## Cat and Dog Collector App:
-The aim of this app is to encourage people to spend more time outdoors, collecting pictures of cute cats and dogs they encounter in their daily lives.
+## Cat and Dog Collector Website:
+The aim to this website is to encourage people to spend more time outdoors, collecting pictures of cute cats and dogs they encounter in their daily lives.
 
 ### For the AI Model:
-When users capture photos of cats or dogs with their phone's camera, they can upload these photos to the app. The app's backend incorporates an AI model for identifying cat and dog breeds and removing backgrounds. It can save the silhouettes of cats and dogs as PNG files, allowing users to keep them.
+When users capture photos of cats or dogs with their phone's camera, they can upload these photos to the website. The website's backend incorporates AI models for identifying cat and dog breeds and removing backgrounds. It can save the silhouettes of cats and dogs as PNG files, allowing users to keep them.
 
-### For the App:
-In addition to the features mentioned above, the app will randomly assign attributes and beautiful backgrounds to the collected images. This enables users to experience the joy of collecting digital cards and share them with friends. There may also be a possibility of adding a multiplayer battle feature in the future.
+When faced with issues related to cats and dogs, users can submit their questions to the chatbot, which is built on Taiwan Llama with RAG, and receive prompt and accurate answers.
+
+### For the website:
+We have developed a user-friendly interface that includes an 'upload images' button, enabling users to easily share their photos, as well as a 'download' button. Additionally, we've implemented a chatbot interface to enhance user experience, allowing intuitive input for questions.
+
+In addition to the features mentioned above, the website can provide personalized recommendations for cats and dogs based on your input.
+
+
 
 ## Programming Framework:
-- App Design: Flutter
+- website Design: React
 - AI Model: PyTorch
 
 
-![flutter](./imgs/flutter.png)
+![react](./imgs/react.jpg)
 
-The app development will be done using Flutter, which is an open-source framework for building cross-platform applications for both iOS and Android.
+The website development will be done using React, an open-source framework known for its efficiency and flexibility. This choice ensures a robust and dynamic platform, enabling seamless user interactions and enhanced functionality
 
 
-![flutter](./imgs/pytorch.jpg)
+![pytorch](./imgs/pytorch.jpg)
 
 The AI model development will be handled using PyTorch, a powerful deep learning framework, for tasks such as breed recognition and background removal.
 
-This exciting app project combines mobile app development with AI capabilities to enhance the experience of collecting and sharing pictures of adorable cats and dogs.
+This exciting website project combines website development with AI capabilities to enhance the experience of collecting and sharing pictures of adorable cats and dogs.
 
 ## Keyword on the Working Items
 
-### App
+### website
 - UI Design
 - Image Upload
-- Card Generation
-- Save Cards
-- Randomly Assign Attributes and Beautiful Backgrounds
+- Save Images
 
 ### AI Model
 - Cat and Dog Breed Recognition
 - Background Removal (Clipping)
+- Chat Bot
 - Model Deployment
 
 ## CICD flow
