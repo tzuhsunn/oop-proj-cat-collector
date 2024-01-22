@@ -116,7 +116,7 @@ def test():
             return jsonify({'error': 'no data'})
         input_data = data.get('input')
         print(input_data)
-        api_url = "http://203.145.216.230:50642/cat-dog/invoke"
+        api_url = "http://203.145.216.230:55452/cat-dog/invoke"
         api_payload = {
             "input": input_data,
             "config": {},
