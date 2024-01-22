@@ -35,6 +35,7 @@ export default function ShopProductCard({ product }) {
           {product.name} &nbsp;&nbsp;&nbsp;
           {product.name_zh}
         </Link>
+        {product.description}
       </Stack>
     </Card>
   );
