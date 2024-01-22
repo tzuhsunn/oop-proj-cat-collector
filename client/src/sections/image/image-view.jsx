@@ -12,7 +12,6 @@ import { Dialog, DialogTitle, DialogActions, Button } from '@mui/material';
 
 import React, { useState, useRef } from 'react';
 import { useNavigate } from "react-router-dom";
-
 import { saveAs } from 'file-saver';
 
 import { bgGradient } from 'src/theme/css';

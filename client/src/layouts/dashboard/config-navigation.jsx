@@ -19,12 +19,12 @@ const navConfig = [
   },
   {
     title: '貓貓圖鑑',
-    path: '/products',
+    path: '/all-cats',
     icon: icon('ic_user'),
   },
   {
-    title: '貓貓抽卡',
-    path: '/blog',
+    title: '貓貓推薦',
+    path: '/recommend',
     icon: icon('ic_blog'),
   },
   {
