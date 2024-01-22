@@ -9,12 +9,15 @@ import ProductCard from '../product-card';
 // ----------------------------------------------------------------------
 
 export default function ProductsView() {
-  const [catData, setCatData] = useState([{name: 'al ',
-  cover: 'https://tzuhsun.online/static/cat/Abyssinian_1.jpg',},]);
+  const [catData, setCatData] = useState([
+    {
+      name: 'cat',
+      cover: 'https://tzuhsun.online/static/cat/Abyssinian_1.jpg'},
+  ]);
   useEffect(() => {
     const fetchCatData = async () => {
       try {
-        const response = await fetch('http://localhost:3001/1.0/cat/listAllCats');
+        const response = await fetch('https://tzuhsun.online/api/1.0/cat/listAllCats');
         if (!response.ok) {
           throw new Error('Failed to fetch cat data');
         }
