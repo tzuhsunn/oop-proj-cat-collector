@@ -67,3 +67,30 @@ This exciting website project combines website development with AI capabilities 
 3. Flask server -> python engine run at port 5000 -> proxy pass to nginx /cat/
 4. Nodejs server -> docker run forwarding to port 3000
 5. Frontend -> build out and server by nginx (root location /)
+
+## Repo structure
+1. Classification: 
+    - Binary classification: go to binary_classfier branch
+    - Breed classification: go to efficientnet1004 branch
+
+    Follow the README in each branch to train your own model. Note that you may need a kagggle account to download the dataset.
+
+2. Segmentation
+    
+    For the segmentation part, you may go to segmentation1005 branch and follow the README to train your own model. Note that you may need a kagggle account to download the dataset.
+
+3. Chatbot
+    
+    For the chatbot part, you may run rag.py in the main branch. Note you may need a Huggingface Text Generation Inference API to do inference.
+
+4. Recommendation
+        
+    For the recommendation part, you may run app.py to open a beckend server.
+
+5. Backend
+    
+    For the backend part, you may go to predict_api for more information.The weights of the model are in app/checkpoint/.
+
+5. Frontend
+    
+    For the frontend part, go to the cilent folder in main branch for more information.
