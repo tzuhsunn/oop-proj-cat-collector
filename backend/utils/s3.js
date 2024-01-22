@@ -1,5 +1,5 @@
 const { S3 } = require("aws-sdk");
-const { param } = require("../routes/product");
+const { param } = require("../routes/cat");
 const uuid = require("uuid").v4
 
 exports.s3Uploadv2 = async (mainImage, images) => {

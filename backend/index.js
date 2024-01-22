@@ -2,7 +2,7 @@ require('dotenv').config();
 const cors = require('cors');
 const express = require('express');
 const path = require('path');
-const userRoutes = require('./routes/user');
+// const userRoutes = require('./routes/user');
 const catRoutes = require('./routes/cat');
 
 const app = express();
@@ -17,9 +17,8 @@ app.use(cors({
 }));
 
 // Use the user routes
-app.use('/1.0/user', userRoutes);
+// app.use('/1.0/user', userRoutes);
 app.use('/1.0/cat', catRoutes);
-app.use('/docs', docRoutes);
 
 app.get('/', (req, res) => {
     res.send('Node.js and Express REST API server is running!');
