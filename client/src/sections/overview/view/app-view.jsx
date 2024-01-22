@@ -24,7 +24,7 @@ export default function AppView() {
         <Grid xs={8} sm={6} md={3}>
         <AppWidgetSummary
             title="Captured Cats"
-            total={1352}
+            total={48}
             color="info"
             icon={<img alt="icon" src="/assets/icons/cats/cat1.png" />}
           />
@@ -59,10 +59,12 @@ export default function AppView() {
             title="貓貓捕獲分佈"
             chart={{
               series: [
-                { label: 'America', value: 4344 },
-                { label: 'Asia', value: 5435 },
-                { label: 'Europe', value: 1443 },
-                { label: 'Africa', value: 4443 },
+                { label: '巴哥犬', value: 3 },
+                { label: '蘇格蘭㹴犬', value: 5 },
+                { label: '布偶貓', value: 20 },
+                { label: '美國鬥牛犬', value: 5 },
+                { label: '斯塔福郡鬥牛㹴', value: 5 },
+                { label: '孟加拉貓', value: 10 },
               ],
             }}
           />
