@@ -13,9 +13,10 @@ import { bgGradient } from 'src/theme/css';
 
 import Logo from 'src/components/logo';
 import Iconify from 'src/components/iconify';
-import { updateAccountFromLocalStorage } from 'src/_mock/account';
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 import { jwtDecode } from "jwt-decode";
+
+import { updateAccountFromLocalStorage } from 'src/_mock/account';
 
 // ----------------------------------------------------------------------
 
