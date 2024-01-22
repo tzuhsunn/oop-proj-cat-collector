@@ -4,15 +4,25 @@ For 2023 aoop group project
 ## Cat and Dog Collector Website:
 The aim to this website is to encourage people to spend more time outdoors, collecting pictures of cute cats and dogs they encounter in their daily lives.
 
+| Classifier breeds | Remove background | Chat bot |
+| ------- | ------- | --------- |
+| ![Classifier breeds](./imgs/classifier.jpg) | ![Remove and add background](./imgs/addnewback.jpg) | ![Classifier breeds](./imgs/chat.jpg) |
+
+We've designed a user-friendly interface featuring an 'upload images' button for easy cat and dog breed classification. Users can also seamlessly edit the background of these images. Additionally, a download button is available to save the newly edited images.
+
+Additionally, we've implemented a chatbot interface to enhance user experience, allowing intuitive input for questions.
+
+## Function:
 ### For the AI Model:
 When users capture photos of cats or dogs with their phone's camera, they can upload these photos to the website. The website's backend incorporates AI models for identifying cat and dog breeds and removing backgrounds. It can save the silhouettes of cats and dogs as PNG files, allowing users to keep them.
 
 When faced with issues related to cats and dogs, users can submit their questions to the chatbot, which is built on Taiwan Llama with RAG, and receive prompt and accurate answers.
 
 ### For the website:
-We have developed a user-friendly interface that includes an 'upload images' button, enabling users to easily share their photos, as well as a 'download' button. Additionally, we've implemented a chatbot interface to enhance user experience, allowing intuitive input for questions.
 
 In addition to the features mentioned above, the website can provide personalized recommendations for cats and dogs based on your input.
+
+The website allows users to change the background of cats and dogs in their collected images. This feature enhances the joy of collecting digital cards and enables users to share their creations with friends.
 
 
 
@@ -21,7 +31,7 @@ In addition to the features mentioned above, the website can provide personalize
 - AI Model: PyTorch
 
 
-![react](./imgs/react.jpg)
+![React](./imgs/React.jpg)
 
 The website development will be done using React, an open-source framework known for its efficiency and flexibility. This choice ensures a robust and dynamic platform, enabling seamless user interactions and enhanced functionality
 
@@ -38,6 +48,7 @@ This exciting website project combines website development with AI capabilities 
 - UI Design
 - Image Upload
 - Save Images
+- Change Backgrouds
 
 ### AI Model
 - Cat and Dog Breed Recognition
