@@ -1,5 +1,5 @@
 const express = require('express');
-const { createCat, listAllCats } = require('../controllers/cat');
+const { createCat, listAllCats, recommendCats } = require('../controllers/cat');
 const upload = require('../utils/upload');
 
 const router = express.Router();
@@ -21,5 +21,6 @@ const router = express.Router();
  * Cat list api
  */
 router.get('/listAllCats', async (req, res) => { listAllCats(req, res) });
+router.get('/recommendCats', async (req, res) => { recommendCats(req, res) });
 
 module.exports = router;

@@ -69,7 +69,22 @@ const listAllCats = async (req, res) => {
     }
 };
 
+const recommendCats = async (req, res) => {
+    try {
+        const cats = await catModel.recommendCats();
+        if (!cats) {
+            return res.status(404).json({ error: 'cats not found' });
+        }
+        console.log(cats);
+        res.status(200).json(cats);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
 module.exports = {
     // createCat,
     listAllCats,
+    recommendCats
 };
