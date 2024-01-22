@@ -94,3 +94,8 @@ This exciting website project combines website development with AI capabilities 
 5. Frontend
     
     For the frontend part, go to the cilent folder in main branch for more information.
+
+## Class Diagram
+![class_diagram](./imgs/class_diagram.png)
+## Deployment
+![deployment](./imgs/deploy.jpg)
