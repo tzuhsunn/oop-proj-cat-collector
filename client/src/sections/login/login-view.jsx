@@ -11,10 +11,10 @@ import { useRouter } from 'src/routes/hooks';
 
 import { bgGradient } from 'src/theme/css';
 
+import { jwtDecode } from "jwt-decode";
 import Logo from 'src/components/logo';
 import Iconify from 'src/components/iconify';
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
-import { jwtDecode } from "jwt-decode";
 
 import { updateAccountFromLocalStorage } from 'src/_mock/account';
 
