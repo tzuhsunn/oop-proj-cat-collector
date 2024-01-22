@@ -40,7 +40,7 @@ def predict():
             data = {'number': prediction,'breed': classes[prediction]}
             return jsonify(data)
         else:
-            return jsonify({'number': -1},{'breed':"not a cat or dog"}) # -1 means not a cat and not a dog
+            return jsonify({'number': -1,'breed':"not a cat or dog"}) # -1 means not a cat and not a dog
         
     
 @app.route('/recommend', methods=['POST'])
