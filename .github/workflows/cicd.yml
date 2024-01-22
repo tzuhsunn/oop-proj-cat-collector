@@ -27,5 +27,5 @@ jobs:
           ps aux | grep "python3 app.py" | grep -v grep | awk '{print $2}' | xargs -r kill -9
           nohup python3 app.py > /dev/null 2>&1 &
           disown
-          cd ../../client
+          cd /home/hsun/oop-proj-cat-collector/client
           npm run build
