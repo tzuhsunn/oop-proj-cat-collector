@@ -1,12 +1,9 @@
 // account.js
-
-const account = (() => {
-  return {
-    displayName: localStorage.getItem('name') ? localStorage.getItem('name') : 'Guest',
-    email: localStorage.getItem('email') ? localStorage.getItem('email') : '',
-    photoURL: localStorage.getItem('image') ? localStorage.getItem('image') : '',
-  };
-})();
+const account = (() => ({
+  displayName: localStorage.getItem('name') || 'Guest',
+  email: localStorage.getItem('email') || '',
+  photoURL: localStorage.getItem('image') || '',
+}))();
 
 function updateAccountFromLocalStorage() {
   return {

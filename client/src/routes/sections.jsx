@@ -29,8 +29,8 @@ export default function Router() {
       children: [
         { element: <IndexPage />, index: true },
         { path: 'user', element: <UserPage /> },
-        { path: 'products', element: <ProductsPage /> },
-        { path: 'blog', element: <BlogPage /> },
+        { path: 'all-cats', element: <ProductsPage /> },
+        { path: 'recommend', element: <BlogPage /> },
         { path: 'profile', element: <ProfilePage /> },
         { path: 'image-edit', element: <ImagePage /> },
         { path: 'chat', element: <ChatPage /> },
